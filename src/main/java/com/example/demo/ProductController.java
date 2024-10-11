@@ -9,12 +9,20 @@ import java.util.Map;
 
 @RestController
 public class ProductController {
+    private final HashMap<Integer, String> products = new HashMap<>();
 
     @GetMapping("/products/{productId}")
     public Map<String, String> getProduct(@PathVariable int productId) {
-        Map<String, String> response = new HashMap<>();
-        response.put("id", String.valueOf(productId));
-        response.put("name", productId + " name");
+        HashMap<String, String> response = new HashMap<>();
+        products.put(productId, productId + " name");
+        response.put("productId", Integer.toString(productId));
+        response.put("productName", productId + " name");
         return response;
     }
+
+    @GetMapping("/products")
+    public Map<Integer, String> getProducts() {
+        return products;
+    }
+
 }

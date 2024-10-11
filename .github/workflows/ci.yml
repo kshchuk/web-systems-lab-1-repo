@@ -23,7 +23,7 @@ jobs:
           distribution: 'adopt'
 
       - name: Run tests
-        run: ./gradlew test
+        run: mvn test
 
       - name: Upload test results
         uses: actions/upload-artifact@v3

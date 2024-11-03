@@ -31,3 +31,8 @@ build/
 
 ### VS Code ###
 .vscode/
+sonar-project.properties
+*.jar
+*.jar
+newrelic/newrelic.yml
+sonar-project.properties

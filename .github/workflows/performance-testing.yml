@@ -37,7 +37,7 @@ jobs:
           docker-compose version
 
       - name: Start services with Docker Compose
-        run: docker-compose up --build --scale agent=0 k6=0 -d
+        run: docker-compose up --build --scale agent=0 --scale k6=0 -d
 
       - name: Wait for services to start
         run: sleep 20

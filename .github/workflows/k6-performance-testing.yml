@@ -36,18 +36,14 @@ jobs:
       - name: Start services with Docker Compose
         run: docker-compose up db app prometheus grafana agent influxdb --detach
 
-      - name: Wait for services to start
-        run: sleep 30
-
       - name: Set permissions
         run: chmod -R 777 ./k6-scripts
 
-
       - name: Run k6 performance tests
-        run: |
-          docker run --rm -v ${{ github.workspace }}/k6-scripts:/k6-scripts grafana/k6:latest run /k6-scripts/test.js \
-            --out influxdb=http://k6:k6password@localhost:8086/k6 \
-            --out json=/k6-scripts/results.json
+        run: docker-compose up k6
+         # docker run --rm -v ${{ github.workspace }}/k6-scripts:/k6-scripts grafana/k6:latest run /k6-scripts/test.js \
+         #   --out influxdb=http://k6:k6password@localhost:8086/k6 \
+         #   --out json=/k6-scripts/results.json
 
       - name: Upload k6 results
         uses: actions/upload-artifact@v3

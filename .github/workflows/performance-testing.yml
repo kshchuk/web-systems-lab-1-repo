@@ -25,8 +25,10 @@ jobs:
           INFLUXDB_USER_PASSWORD: k6password
 
     steps:
-      - name: Checkout code
+      - name: Checkout main branch
         uses: actions/checkout@v3
+        with:
+          ref: main
 
       - name: Set up Docker Compose
         run: |

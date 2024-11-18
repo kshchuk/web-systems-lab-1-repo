@@ -1,6 +1,6 @@
 enable_process_metrics: true
 status_server_enabled: true
 status_server_port: 18003
-license_key: eu01xx9628299442cc9ccb49dfa7a07fFFFFNRAL
+license_key: ${NEW_RELIC_LICENSE_KEY}
 custom_attributes:
   nr_deployed_by: lab1

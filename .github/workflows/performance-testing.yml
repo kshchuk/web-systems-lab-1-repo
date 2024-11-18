@@ -37,7 +37,7 @@ jobs:
           docker-compose version
 
       - name: Start services with Docker Compose
-        run: docker-compose up db app prometheus grafana influxdb
+        run: docker-compose up db app prometheus grafana influxdb agent
 
       - name: Wait for services to start
         run: sleep 20

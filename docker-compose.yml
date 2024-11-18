@@ -68,7 +68,7 @@ services:
   influxdb:
     image: influxdb:1.8
     ports:
-      - "8087:8086"
+      - "8086:8086"
     environment:
       INFLUXDB_DB: k6
       INFLUXDB_ADMIN_USER: admin
@@ -80,7 +80,7 @@ services:
     image: grafana/k6:latest
     container_name: k6
     entrypoint: ["sh", "-c", "sleep 30 && k6 run /k6-scripts/test.js 
-                  --out influxdb=http://k6:k6password@influxdb:8087/k6 \
+                  --out influxdb=http://k6:k6password@influxdb:8086/k6 \
                   --out json=/k6-scripts/results.json"]
     depends_on:
       - app

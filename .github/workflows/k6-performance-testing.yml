@@ -1,4 +1,4 @@
-name: Performance Tests
+name: K6 Performance Tests
 
 on:
   push:

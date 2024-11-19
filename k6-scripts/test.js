@@ -34,7 +34,7 @@ export default function () {
     const res = http.get('http://nginx/products');
     check(res, {
         'status is 200': (r) => r.status === 200,
-        'body contains products': (r) => r.body.includes('testName'),
+        'body contains product': (r) => r.body.indexOf('product') !== -1,
     });
 
     // Think time

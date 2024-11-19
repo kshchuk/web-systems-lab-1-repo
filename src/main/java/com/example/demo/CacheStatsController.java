@@ -1,36 +1,36 @@
 package com.example.demo;
 
-import com.github.benmanes.caffeine.cache.Cache;
-import com.github.benmanes.caffeine.cache.stats.CacheStats;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.caffeine.CaffeineCacheManager;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Set;
 
 @RestController
 @RequestMapping("/cache")
 public class CacheStatsController {
 
-    private final CaffeineCacheManager cacheManager;
+    private final RedisTemplate<Object, Object> redisTemplate;
 
     @Autowired
-    public CacheStatsController(CaffeineCacheManager cacheManager) {
-        this.cacheManager = cacheManager;
+    public CacheStatsController(RedisTemplate<Object, Object> redisTemplate) {
+        this.redisTemplate = redisTemplate;
     }
 
     @GetMapping("/stats")
     public String getCacheStats() {
-        // Ensure the cache exists
-        if (cacheManager.getCache("products") == null) {
-            return "Cache 'products' not found.";
+        // Get all keys from the "products" cache
+        Set<Object> keys = redisTemplate.keys("products:*");
+
+        if (keys == null || keys.isEmpty()) {
+            return "No keys found in the 'products' cache.";
         }
 
-        // Cast the native cache to Caffeine cache
-        Cache<Object, Object> nativeCache = (Cache<Object, Object>) cacheManager.getCache("products").getNativeCache();
+        // Fetch memory usage (optional, requires Redis monitoring tools)
+        long totalKeys = keys.size();
 
-        // Fetch and return cache stats
-        CacheStats stats = nativeCache.stats();
-        return stats.toString();
+        return String.format("Cache 'products' contains %d keys.", totalKeys);
     }
 }

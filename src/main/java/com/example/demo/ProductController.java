@@ -20,10 +20,9 @@ public class ProductController {
 
     @Cacheable(value = "products", key = "#productId")
     @GetMapping("/{productId}")
-    public ResponseEntity<Map<String, String>> getProduct(@PathVariable int productId) {
-        // Симулюємо повільний запит для демонстрації кешу
+    public Map<String, String> getProduct(@PathVariable int productId) {
         try {
-            Thread.sleep(2000);
+            Thread.sleep(2000); // Simulate a slow request
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }
@@ -34,12 +33,12 @@ public class ProductController {
         if (product != null) {
             response.put("productId", Integer.toString(product.getId()));
             response.put("productName", product.getName());
-            return ResponseEntity.ok(response);
         } else {
             response.put("error", "Product not found");
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
         }
+        return response;
     }
+
 
     @GetMapping
     public List<Product> getProducts() {

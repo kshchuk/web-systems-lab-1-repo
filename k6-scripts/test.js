@@ -31,7 +31,7 @@ export const options = {
 };
 
 export default function () {
-    const res = http.get('http://springApp:8080/products');
+    const res = http.get('http://nginx/products');
     check(res, {
         'status is 200': (r) => r.status === 200,
         'body contains products': (r) => r.body.includes('testName'),

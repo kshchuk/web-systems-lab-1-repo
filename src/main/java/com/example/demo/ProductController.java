@@ -1,5 +1,6 @@
 package com.example.demo;
 
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,8 +18,16 @@ public class ProductController {
         this.productRepository = productRepository;
     }
 
+    @Cacheable(value = "products", key = "#productId")
     @GetMapping("/{productId}")
     public ResponseEntity<Map<String, String>> getProduct(@PathVariable int productId) {
+        // Симулюємо повільний запит для демонстрації кешу
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+
         Product product = productRepository.findById(productId).orElse(null);
         HashMap<String, String> response = new HashMap<>();
 

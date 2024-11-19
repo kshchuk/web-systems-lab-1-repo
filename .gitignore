@@ -38,3 +38,6 @@ newrelic/newrelic.yml
 sonar-project.properties
 sonar-project.properties
 k6-scripts/results.json
+newrelic/newrelic.yml
+newrelic-infra.yml
+k6-scripts/results.json
